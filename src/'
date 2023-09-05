@@ -1,0 +1,88 @@
+#include <inttypes.h>
+#include <sys/syscall.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+int myStrLen(const char*);
+int myAtoi(const char*);
+int calculateMostCalories(const char*);
+
+int myStrLen(const char* inputString) {
+    int counter = 0;
+    while (inputString[counter] != '\0') {
+        counter += 1; 
+    }
+    //printf("%d\n", counter);
+    return counter;
+}
+
+int powerOf(int value, int pow) {
+    int result = 1;
+    for (int i = 0; i < pow; i++) {
+        result *= value;
+    }
+    return result;
+}
+        
+
+int myAtoi(const char* inputString){
+    int value = 0;
+    int sizeArr = myStrLen(inputString);
+    for (int i = 0; i < sizeArr; i++) {
+        int asciiValue = inputString[i]; // convert to string?
+        if (asciiValue < 48 || asciiValue > 57) {
+            return 0;
+        }
+        value += (asciiValue - 48) * powerOf(10, sizeArr - i - 1);
+    }
+    return value;
+}
+
+
+int calculateMostCalories(const char* inventoryString){
+    // Strings:
+    // Strings are terminated by the null byte '\0', and is defined as a const*.
+    // Need to allocate space for the null byte when setting the array size for the string.
+    // String literals are placed in read-only storage.
+    //
+    // Conventions: 
+    // Functions operating on memory are prefixed with 'mem', for strings 'str'.
+    // When manipulating arbitrary arrays or blocks of storage, use 'mem' functions. For strings, use 'str' functions.
+    //
+    // Some functions:
+    // strlen() gets the size of the string (until the null byte), sizeof() gets the allocated memory for that const char*.
+    //
+    //
+    int total = 0;
+    // Check for the end of the string against the NULL character ASCII 0
+    if (inventoryString != 0x00) {
+        return total;
+    }
+
+    const char* stringContents;
+    int totalValues = 0;
+    for (int i = 0; i < sizeof(inventoryString); i++) {
+        // Compare against the newline character which is ASCII 10.
+        if (inventoryString[i] != 0x0a) {
+            //total += (stringContents)
+            stringContents += inventoryString[i];
+        }
+        else {
+            totalValues[0] += myAtoi(stringContents);
+            printf("%d", totalValues);
+        }
+
+    }
+    return -1; // Could not find the end of the string   
+}
+
+
+int main(int argc, char* argv[]){
+    const char* newValString = "2300\n";
+    int newValInt = myAtoi(newValString);
+    //    write(1, newValInt, strlen(newValString);
+    //syscall(SYS_write, 1, newValString, myStrLen(newValString);
+    //printf("%d", newValInt);
+    calculateMostCalories(newValString);
+    return 0;
+}
